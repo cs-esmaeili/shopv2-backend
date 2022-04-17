@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/views/layouts/Login/Login.css"],"names":[],"mappings":"AAAA,4BACI,iBACJ,CAFA,uBACI,iBACJ,CAFA,wBACI,iBACJ,CAFA,cACI,iBACJ","file":"main.3fcb2455.chunk.css","sourcesContent":["::placeholder {\n    text-align: center;\n}\n"]}
