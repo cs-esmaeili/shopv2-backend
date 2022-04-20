@@ -134,9 +134,16 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/deleteProduct', [Product::class, 'deleteProduct'])->name('deleteProduct');
     });
 });
-Route::prefix('user')->group(function () {
+Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {
 
     Route::post('/logIn', [Authentication::class, 'logIn'])->name('logIn');
     Route::post('/logOut', [Authentication::class, 'logOut'])->name('logOut');
+    Route::post('/indexPageView', [IndexPage::class, 'indexPageView'])->name('indexPageView');
+    Route::post('/register', [Authentication::class, 'register'])->name('register');
+    Route::post('/productData', [Product::class, 'productData'])->name('productData');
 
+
+    Route::middleware([CheckToken::class])->group(function () {
+        Route::post('/checkToken', [Authentication::class, 'checkToken'])->name('checkToken');
+    });
 });

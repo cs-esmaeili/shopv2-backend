@@ -11,11 +11,11 @@ class Product extends Model
     protected $table = 'product';
     protected $primaryKey = 'product_id';
     protected $guarded = ['product_id'];
-    protected $fillable  = ['category_id', 'name', 'price', 'sale_price', 'status', 'stock', 'image_folder', 'description'];
+    protected $fillable  = ['category_id', 'name', 'price', 'sale_price', 'status', 'stock', 'image_folder', 'review' ,'description'];
 
     public function items()
     {
-        return $this->belongsToMany(Token::class, 'product_item', 'product_id', 'item_id');
+        return $this->belongsToMany(Item::class, 'product_item', 'product_id', 'item_id');
     }
     public function category()
     {
@@ -43,8 +43,10 @@ class Product extends Model
                 $this['image'] = $image['link'];
             }
         }
-        $temp = $this->category;
-        $this['category'] = $temp;
+        $temp1 = $this->category;
+        $temp2 = $this->items;
+        $this['category'] = $temp1;
+        $this['items'] = $temp2;
         $this['time'] = G::converToShamsi($product['created_at']);
     }
 }

@@ -64,11 +64,9 @@ class IndexPage extends Controller
         foreach ($product5 as  $value) {
             $value->productFullData();
         }
-        $data = ['slider' => $silder, 'latestPosts' => $lastPosts, 'products3x' => [$product1, $product2, $product3]
-        , 'special' => $product4
-        , 'moreSeal' => $product5
-    ];
-
-        return view('pages.home', ['data' => $data]);
+        $data = [
+            'slider' => $silder, 'latestPosts' => $lastPosts, 'products3x' => [$product1, $product2, $product3], 'special' => $product4, 'moreSeal' => $product5
+        ];
+        return response(['statusText' => 'ok', 'data' => $data], 200);
     }
 }

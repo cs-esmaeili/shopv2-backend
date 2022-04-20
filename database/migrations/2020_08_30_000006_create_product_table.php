@@ -24,6 +24,7 @@ class CreateProductTable extends Migration
             $table->tinyInteger('status');
             $table->mediumInteger('stock');
             $table->string('image_folder',255);
+            $table->text('review');
             $table->text('description');
         });
     }

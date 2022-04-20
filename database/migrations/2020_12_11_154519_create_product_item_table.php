@@ -17,8 +17,8 @@ class CreateProductItemTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('item_id');
             $table->primary(['product_id', 'item_id']);
-            $table->foreign('product_id')->references('product_id')->on('product');
-            $table->foreign('item_id')->references('item_id')->on('item');
+            $table->foreign('product_id')->references('product_id')->on('product')->cascadeOnDelete(true);
+            $table->foreign('item_id')->references('item_id')->on('item')->cascadeOnDelete(true);
             $table->timestamps();
         });
     }

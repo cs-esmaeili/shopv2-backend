@@ -107,7 +107,7 @@ class FM
     public static function folderFilesLinks($location, $token = null)
     {
         $files = self::files($location);
-        if (count($files) == 0) {
+        if (empty($files)) {
             return 'location is empty';
         }
         $outfiles = [];

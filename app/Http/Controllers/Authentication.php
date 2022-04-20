@@ -8,6 +8,7 @@ use App\Http\Requests\logOut;
 use App\Models\Person;
 use App\Models\Token;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
 class Authentication extends Controller
 {
@@ -37,6 +38,28 @@ class Authentication extends Controller
         ]);
         return response(['statusText' => 'ok'], 200);
     }
+    public function register(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = Person::where('username', '=', G::changeWords($content->username))->get();
+        if ($person->count() == 0) {
+            $token = G::newToken(G::changeWords($content->username), -1, 90);
+            $person = Person::create([
+                'username' =>   G::changeWords($content->username),
+                'password' =>  G::getHash(G::changeWords($content->password)),
+                'role_id' =>  2,
+                'token_id' =>  $token['token_id'],
+                'status' =>  1,
+
+            ]);
+            if ($person->exists) {
+                return response(['statusText' => 'ok', 'token' => $token['token']], 200);
+            }
+            return response(['statusText' => 'fail'], 201);
+        }
+        return response(['statusText' => 'fail', 'message' => 'نام کاربری وجود دارد'], 201);
+    }
+
     public function checkToken()
     {
         return response(['statusText' => 'ok'], 200);

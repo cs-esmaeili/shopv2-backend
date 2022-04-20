@@ -43,12 +43,12 @@ class CheckHeaders
         if ($request->header('content-type') == 'application/json' && !G::isJson($request->getContent())) {
             return response(['statusText' => 'fail', "meessage" => "content is not json"], 406);
         }
-        $response = $next($request);
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $response->headers->set('Access-Control-Allow-Credentials', 'true');
-        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application');
 
-        return $response;
+        return $next($request)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Credentials', 'true')
+        ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application')
+;
     }
 }

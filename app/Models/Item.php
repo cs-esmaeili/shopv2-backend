@@ -12,6 +12,6 @@ class Item extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Token::class, 'product_item', 'item_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'product_item', 'item_id', 'product_id');
     }
 }
