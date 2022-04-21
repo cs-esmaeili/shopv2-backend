@@ -86,12 +86,11 @@ class Product extends Controller
     {
         $content =  json_decode($request->getContent());
         $result = ModelsProduct::where('product_id', '=', $content->product_id)->get();
-
         foreach ($result as  $value) {
             $value->productFullData();
         }
         if ($result->count() == 1) {
-            return response(['statusText' => 'ok', 'data' => $result], 200);
+            return response(['statusText' => 'ok', 'data' => $result[0]], 200);
         } else {
             return response(['statusText' => 'fail', 'message' => "خطای در بازیابی اطلاعات رخ داد دوباره سعی کنید"], 201);
         }

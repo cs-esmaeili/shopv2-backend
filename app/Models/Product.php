@@ -38,13 +38,15 @@ class Product extends Model
         $product = $this->toArray();
         $location = FM::location($this->image_folder, 'public');
         $temp = FM::folderFilesLinks($location);
+        $images = [];
         foreach ($temp as  $image) {
             if (str_contains($image['name'], 'p')) {
-                $this['image'] = $image['link'];
+                $images[] = $image['link'];
             }
         }
         $temp1 = $this->category;
         $temp2 = $this->items;
+        $this['images'] = $images;
         $this['category'] = $temp1;
         $this['items'] = $temp2;
         $this['time'] = G::converToShamsi($product['created_at']);
