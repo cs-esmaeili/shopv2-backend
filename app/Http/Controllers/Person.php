@@ -18,7 +18,9 @@ use App\Http\Requests\rolePermissions;
 use App\Models\PersonAddress;
 use App\Models\Permission;
 use App\Models\Person as ModelsPerson;
+use App\Models\PersonFavorite;
 use App\Models\PersonInfo;
+use App\Models\Product;
 use App\Models\Role;
 use App\Models\Role_Permission;
 use App\Models\User_Message;
@@ -206,7 +208,7 @@ class Person extends Controller
     public function listAddress(Request $request)
     {
         $person = G::getPersonFromToken($request->bearerToken());
-        $result = PersonAddress::where('person_id' , '=' , $person->person_id)->get();
+        $result = PersonAddress::where('person_id', '=', $person->person_id)->get();
         if ($result->count() > 0) {
             return response(['statusText' => 'ok', 'list' =>  $result], 200);
         } else {
@@ -217,11 +219,69 @@ class Person extends Controller
     {
         $content =  json_decode($request->getContent());
         $person = G::getPersonFromToken($request->bearerToken());
-        $result = PersonAddress::where('person_id' , '=' , $person->person_id)->where('person_address_id' , '=' , $content->person_address_id)->delete();
+        $result = PersonAddress::where('person_id', '=', $person->person_id)->where('person_address_id', '=', $content->person_address_id)->delete();
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "آدرس حذف شد"], 200);
         } else {
             return response(['statusText' => 'fail', 'message' => "آدرس حذف نشد"], 200);
+        }
+    }
+    public function addFavorite(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = PersonFavorite::where([
+            'person_id' => $person->person_id,
+            'product_id' => $content->product_id
+
+        ])->get();
+        if ($result->count() == 0) {
+            $result = PersonFavorite::create([
+                'person_id' => $person->person_id,
+                'product_id' => $content->product_id
+
+            ]);
+            if ($result) {
+                return response(['statusText' => 'ok', 'message' => "کالا به علاقه مندی ها اضافه شد"], 200);
+            } else {
+                return response(['statusText' => 'fail',  'message' => "کالا به علاقه مندی ها اضافه نشد"], 200);
+            }
+        }
+        return response(['statusText' => 'ok', 'message' => "کالا به علاقه مندی ها اضافه شد"], 200);
+    }
+    public function deleteFavorite(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = PersonFavorite::where([
+            'person_id' => $person->person_id,
+            'product_id' => $content->product_id
+
+        ])->delete();
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "کالا از علاقه مندی ها حذف شد"], 200);
+        } else {
+            return response(['statusText' => 'fail',  'message' => "کالا از علاقه مندی ها حذف نشد"], 200);
+        }
+    }
+    public function favoriteList(Request $request)
+    {
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = PersonFavorite::where([
+            'person_id' => $person->person_id,
+        ])->get();
+        $ids = [];
+        foreach ($result as $item) {
+            $ids[] = $item->product_id;
+        }
+        $result =  Product::where('product_id', '=', $ids)->get();
+        foreach ($result as $product) {
+            $product->productFullData();
+        }
+        if ($result) {
+            return response(['statusText' => 'ok', 'list' => $result], 200);
+        } else {
+            return response(['statusText' => 'fail',  'message' => "خطا در بازیابی اطلاعات"], 200);
         }
     }
 }
