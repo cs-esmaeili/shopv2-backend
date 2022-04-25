@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\classes\G;
 use App\Models\Item;
+use App\Models\Person;
 use App\Models\Product_Item;
 use App\Models\Product as ModelsProduct;
+use App\Models\UserCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -93,6 +95,21 @@ class Product extends Controller
             return response(['statusText' => 'ok', 'data' => $result[0]], 200);
         } else {
             return response(['statusText' => 'fail', 'message' => "خطای در بازیابی اطلاعات رخ داد دوباره سعی کنید"], 201);
+        }
+    }
+    public function add_cart(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = UserCart::create([
+            'person_id' => $person->person_id,
+            'product_id' => $content->product_id,
+            'number' => $content->number,
+        ]);
+        if ($result->exists) {
+            return response(['statusText' => 'ok', 'message' => 'کالا به سبد خرید اضافه شد'], 200);
+        } else {
+            return response(['statusText' => 'ok', 'message' => 'خطای رخ داد دوباره تلاش کنید'], 200);
         }
     }
 }

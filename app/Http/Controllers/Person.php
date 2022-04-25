@@ -15,7 +15,7 @@ use App\Http\Requests\editRole;
 use App\Http\Requests\missingPermissionss;
 use App\Http\Requests\permissions;
 use App\Http\Requests\rolePermissions;
-use App\Models\File;
+use App\Models\PersonAddress;
 use App\Models\Permission;
 use App\Models\Person as ModelsPerson;
 use App\Models\PersonInfo;
@@ -184,6 +184,44 @@ class Person extends Controller
             return response(['statusText' => 'ok', 'message' => "پیام ذخیره شد"], 200);
         } else {
             return response(['statusText' => 'fail', 'message' => "پیام ذخیره نشد"], 200);
+        }
+    }
+    public function addAddress(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = PersonAddress::create([
+            'person_id' => $person->person_id,
+            'state' => $content->state,
+            'city' => $content->city,
+            'postal_code' => $content->postal_code,
+            'address' => $content->address,
+        ]);
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "آدرس ذخیره شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "آدرس ذخیره نشد"], 200);
+        }
+    }
+    public function listAddress(Request $request)
+    {
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = PersonAddress::where('person_id' , '=' , $person->person_id)->get();
+        if ($result->count() > 0) {
+            return response(['statusText' => 'ok', 'list' =>  $result], 200);
+        } else {
+            return response(['statusText' => 'ok', 'list' =>  null], 200);
+        }
+    }
+    public function deleteAddress(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = PersonAddress::where('person_id' , '=' , $person->person_id)->where('person_address_id' , '=' , $content->person_address_id)->delete();
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "آدرس حذف شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "آدرس حذف نشد"], 200);
         }
     }
 }

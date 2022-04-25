@@ -141,9 +141,13 @@ Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {
     Route::post('/indexPageView', [IndexPage::class, 'indexPageView'])->name('indexPageView');
     Route::post('/register', [Authentication::class, 'register'])->name('register');
     Route::post('/productData', [Product::class, 'productData'])->name('productData');
+    Route::post('/addAddress', [Person::class, 'addAddress'])->name('addAddress');
+    Route::post('/listAddress', [Person::class, 'listAddress'])->name('listAddress');
+    Route::post('/deleteAddress', [Person::class, 'deleteAddress'])->name('deleteAddress');
 
 
     Route::middleware([CheckToken::class])->group(function () {
         Route::post('/checkToken', [Authentication::class, 'checkToken'])->name('checkToken');
+        Route::post('/add_cart', [Product::class, 'add_cart'])->name('add_cart');
     });
 });
