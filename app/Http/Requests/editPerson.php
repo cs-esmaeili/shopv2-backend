@@ -24,11 +24,7 @@ class editPerson extends FormRequest
     public function rules()
     {
         return [
-            'person_id' => 'required',
-            'role_id' => 'required|max:255',
-            'name' => 'required|max:255',
-            'family' => 'required|max:255',
-            'username' => 'required|min:5|max:255',
+
         ];
     }
 }

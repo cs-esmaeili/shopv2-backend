@@ -8,7 +8,7 @@ class PersonInfo extends Model
 {
     protected $table = 'person_info';
     protected $primaryKey = 'person_info_id';
-    protected $fillable  = ['person_id', 'file_id', 'name', 'family', 'description'];
+    protected $fillable  = ['person_id', 'file_id', 'name', 'family', 'description' , 'phoneNumber'];
 
     public function person()
     {

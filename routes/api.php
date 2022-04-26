@@ -141,16 +141,17 @@ Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {
     Route::post('/indexPageView', [IndexPage::class, 'indexPageView'])->name('indexPageView');
     Route::post('/register', [Authentication::class, 'register'])->name('register');
     Route::post('/productData', [Product::class, 'productData'])->name('productData');
-    Route::post('/addAddress', [Person::class, 'addAddress'])->name('addAddress');
-    Route::post('/listAddress', [Person::class, 'listAddress'])->name('listAddress');
-    Route::post('/deleteAddress', [Person::class, 'deleteAddress'])->name('deleteAddress');
-    Route::post('/personProfile', [Person::class, 'personProfile'])->name('personProfile');
-    Route::post('/addFavorite', [Person::class, 'addFavorite'])->name('addFavorite');
-    Route::post('/deleteFavorite', [Person::class, 'deleteFavorite'])->name('deleteFavorite');
-    Route::post('/favoriteList', [Person::class, 'favoriteList'])->name('favoriteList');
 
     Route::middleware([CheckToken::class])->group(function () {
+        Route::post('/addAddress', [Person::class, 'addAddress'])->name('addAddress');
+        Route::post('/listAddress', [Person::class, 'listAddress'])->name('listAddress');
+        Route::post('/deleteAddress', [Person::class, 'deleteAddress'])->name('deleteAddress');
+        Route::post('/personProfile', [Person::class, 'personProfile'])->name('personProfile');
+        Route::post('/addFavorite', [Person::class, 'addFavorite'])->name('addFavorite');
+        Route::post('/deleteFavorite', [Person::class, 'deleteFavorite'])->name('deleteFavorite');
+        Route::post('/favoriteList', [Person::class, 'favoriteList'])->name('favoriteList');
         Route::post('/checkToken', [Authentication::class, 'checkToken'])->name('checkToken');
         Route::post('/add_cart', [Product::class, 'add_cart'])->name('add_cart');
+        Route::post('/editPerson', [Person::class, 'editPerson'])->name('editPerson');
     });
 });
