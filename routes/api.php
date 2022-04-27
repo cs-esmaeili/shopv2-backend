@@ -151,7 +151,10 @@ Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/deleteFavorite', [Person::class, 'deleteFavorite'])->name('deleteFavorite');
         Route::post('/favoriteList', [Person::class, 'favoriteList'])->name('favoriteList');
         Route::post('/checkToken', [Authentication::class, 'checkToken'])->name('checkToken');
-        Route::post('/add_cart', [Product::class, 'add_cart'])->name('add_cart');
+        Route::post('/addCart', [Product::class, 'addCart'])->name('addCart');
+        Route::post('/deleteCart', [Product::class, 'deleteCart'])->name('deleteCart');
+        Route::post('/cartChangeNumber', [Product::class, 'cartChangeNumber'])->name('cartChangeNumber');
+        Route::post('/listCart', [Product::class, 'listCart'])->name('listCart');
         Route::post('/editPerson', [Person::class, 'editPerson'])->name('editPerson');
     });
 });

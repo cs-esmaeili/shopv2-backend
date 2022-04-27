@@ -15,8 +15,8 @@ class UserCart extends Model
     {
         return $this->belongsTo(Person::class, 'person_id', 'person_id');
     }
-    public function products()
+    public function product()
     {
-        return $this->hasMany(Product::class, 'product_id', 'product_id');
+        return $this->hasOne(Product::class, 'product_id', 'product_id');
     }
 }

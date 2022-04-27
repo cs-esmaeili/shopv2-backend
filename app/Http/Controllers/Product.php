@@ -97,7 +97,7 @@ class Product extends Controller
             return response(['statusText' => 'fail', 'message' => "خطای در بازیابی اطلاعات رخ داد دوباره سعی کنید"], 201);
         }
     }
-    public function add_cart(Request $request)
+    public function addCart(Request $request)
     {
         $content =  json_decode($request->getContent());
         $person = G::getPersonFromToken($request->bearerToken());
@@ -110,6 +110,53 @@ class Product extends Controller
             return response(['statusText' => 'ok', 'message' => 'کالا به سبد خرید اضافه شد'], 200);
         } else {
             return response(['statusText' => 'ok', 'message' => 'خطای رخ داد دوباره تلاش کنید'], 200);
+        }
+    }
+    public function deleteCart(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = UserCart::where([
+            'person_id' => $person->person_id,
+            'product_id' => $content->product_id,
+        ])->delete();
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => 'کالا از سبد خرید حذف شد'], 200);
+        } else {
+            return response(['statusText' => 'ok', 'message' => 'کالا از سبد خرید حذف نشد'], 200);
+        }
+    }
+    public function listCart(Request $request)
+    {
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = UserCart::where('person_id', '=', $person->person_id)->get();
+        $outPut = [];
+
+        foreach ($result as $product) {
+            $product->product->productFullData();
+            $temp = $product->product->toArray();
+            $temp['number'] = $product->number;
+            $outPut[] = $temp;
+        }
+        if ($result) {
+            return response(['statusText' => 'ok', 'list' => $outPut], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "خطای در بازیابی اطلاعات رخ داد دوباره سعی کنید"], 201);
+        }
+    }
+    public function cartChangeNumber(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = UserCart::where([
+            'person_id' => $person->person_id,
+            'product_id' => $content->product_id,
+        ])->update(['number' => $content->number]);
+
+        if ($result > 0) {
+            return response(['statusText' => 'ok', 'message' => 'تعداد کالا تغییر پیدا کرد'], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' =>  'تعداد کالا تغییر پیدا نکرد'], 201);
         }
     }
 }
