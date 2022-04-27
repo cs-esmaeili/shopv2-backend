@@ -15,6 +15,8 @@ use App\Http\Requests\editRole;
 use App\Http\Requests\missingPermissionss;
 use App\Http\Requests\permissions;
 use App\Http\Requests\rolePermissions;
+use App\Models\Factor;
+use App\Models\FactorProduct;
 use App\Models\PersonAddress;
 use App\Models\Permission;
 use App\Models\Person as ModelsPerson;
@@ -24,8 +26,10 @@ use App\Models\Product;
 use App\Models\Role;
 use App\Models\Role_Permission;
 use App\Models\User_Message;
+use App\Models\UserCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Person extends Controller
 {
@@ -282,6 +286,33 @@ class Person extends Controller
             return response(['statusText' => 'ok', 'list' => $result], 200);
         } else {
             return response(['statusText' => 'fail',  'message' => "خطا در بازیابی اطلاعات"], 200);
+        }
+    }
+    public function purchase(Request $request)
+    {
+        $result = DB::transaction(function () use ($request) {
+            $content =  json_decode($request->getContent());
+            $person = G::getPersonFromToken($request->bearerToken());
+            $result1 = Factor::create([
+                'person_id' => $person->person_id,
+                'person_address_id' => $content->person_address_id,
+                'ref_id' => 1,
+            ]);
+            $result2 = UserCart::where('person_id', '=', $person->person_id)->get();
+            foreach ($result2 as $product) {
+                $product->product->productFullData();
+                $temp = $product->product->toArray();
+                $temp['number'] = $product->number;
+                $temp['factor_id'] = $result1->factor_id;
+                FactorProduct::create(G::getArrayItems($temp, (new FactorProduct)->getFillable()));
+            };
+            UserCart::where('person_id', '=', $person->person_id)->delete();
+            return true;
+        });
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => 'خرید انجام شد'], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => 'خرید انجام نشد'], 200);
         }
     }
 }

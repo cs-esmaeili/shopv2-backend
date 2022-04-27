@@ -156,5 +156,6 @@ Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/cartChangeNumber', [Product::class, 'cartChangeNumber'])->name('cartChangeNumber');
         Route::post('/listCart', [Product::class, 'listCart'])->name('listCart');
         Route::post('/editPerson', [Person::class, 'editPerson'])->name('editPerson');
+        Route::post('/purchase', [Person::class, 'purchase'])->name('purchase');
     });
 });

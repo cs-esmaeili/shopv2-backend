@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FactorProduct extends Model
 {
-    protected $table = 'actor_product';
+    protected $table = 'factor_product';
     protected $primaryKey = 'actor_product_id';
     protected $guarded = ['actor_product_id'];
     protected $fillable  = ['factor_id', 'product_id', 'number', 'price', 'sale_price'];

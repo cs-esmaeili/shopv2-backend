@@ -18,15 +18,9 @@ class CreateFactorTable extends Migration
             $table->timestamps();
             $table->foreignId('person_id');
             $table->foreign('person_id')->references('person_id')->on('person');
+            $table->foreignId('person_address_id');
+            $table->foreign('person_address_id')->references('person_address_id')->on('person_address');
             $table->string('ref_id',255);
-            $table->string('postal_code',10);
-            $table->decimal('price',12,0);
-            $table->string('name',255);
-            $table->string('phone_number',255);
-            $table->string('state',50);
-            $table->string('city',50);
-            $table->mediumText('address');
-            $table->mediumText('description');
         });
     }
 

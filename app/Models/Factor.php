@@ -8,11 +8,15 @@ class Factor extends Model
 {
     protected $table = 'factor';
     protected $primaryKey = 'factor_id';
-    protected $fillable  = ['person_id', 'ref_id', 'postal_code', 'price', 'name', 'phone_number', 'state', 'city', 'address', 'description'];
+    protected $fillable  = ['person_id', 'person_address_id', 'ref_id'];
 
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id', 'person_id');
+    }
+    public function address()
+    {
+        return $this->belongsTo(PersonAddress::class, 'person_address_id', 'person_address_id');
     }
     public function factorProducts()
     {
