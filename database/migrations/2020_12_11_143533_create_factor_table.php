@@ -20,7 +20,8 @@ class CreateFactorTable extends Migration
             $table->foreign('person_id')->references('person_id')->on('person');
             $table->foreignId('person_address_id');
             $table->foreign('person_address_id')->references('person_address_id')->on('person_address');
-            $table->string('ref_id',255);
+            $table->string('ref_id', 255);
+            $table->enum('status', [1, 2, 3, 4])->default(1);
         });
     }
 

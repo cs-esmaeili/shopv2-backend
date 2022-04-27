@@ -315,4 +315,23 @@ class Person extends Controller
             return response(['statusText' => 'fail', 'message' => 'خرید انجام نشد'], 200);
         }
     }
+
+    public function userFactors(Request $request)
+    {
+        $person = G::getPersonFromToken($request->bearerToken());
+        $result = Factor::where([
+            'person_id' => $person->person_id,
+        ])->get();
+        foreach ($result as $item1) {
+            $temp = $item1->factorProducts;
+            foreach ($temp as $item2) {
+                $item2->product->productFullData();
+            }
+        }
+        if ($result) {
+            return response(['statusText' => 'ok', 'list' => $result], 200);
+        } else {
+            return response(['statusText' => 'fail',  'message' => "خطا در بازیابی اطلاعات"], 200);
+        }
+    }
 }

@@ -8,7 +8,7 @@ class Factor extends Model
 {
     protected $table = 'factor';
     protected $primaryKey = 'factor_id';
-    protected $fillable  = ['person_id', 'person_address_id', 'ref_id'];
+    protected $fillable  = ['person_id', 'person_address_id', 'ref_id' , 'status'];
 
     public function person()
     {
