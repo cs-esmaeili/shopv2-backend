@@ -44,28 +44,28 @@ class CategorySeeder extends Seeder
             'file_id' => 1,
             'parent_id' => 0,
         ]);
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $id =  Category::create([
                 'name' => $i,
                 'type' => "ماستی",
                 'file_id' => 1,
                 'parent_id' => 0,
             ]);
-            for ($b = 0; $b < 2; $b++) {
+            for ($b = 0; $b < 20; $b++) {
                 $id1 = Category::create([
-                    'name' => "sub " . $b,
+                    'name' => "sub " . $b . rand(0, 10),
                     'type' => "ماستی",
                     'file_id' => 1,
                     'parent_id' => $id->category_id,
                 ]);
-                for ($c = 0; $c < 2; $c++) {
-                    Category::create([
-                        'name' => "2 sub " . $c,
-                        'type' => "ماستی",
-                        'file_id' => 1,
-                        'parent_id' => $id1->category_id,
-                    ]);
-                }
+                // for ($c = 0; $c < 2; $c++) {
+                //     Category::create([
+                //         'name' => "2 sub " . $c,
+                //         'type' => "ماستی",
+                //         'file_id' => 1,
+                //         'parent_id' => $id1->category_id,
+                //     ]);
+                // }
             }
         }
     }
