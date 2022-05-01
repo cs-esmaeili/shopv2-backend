@@ -49,9 +49,32 @@ class Post extends Controller
         $content =  json_decode($request->getContent());
         $result = MPost::where('post_id', '=', $content->post_id)->delete();
         if ($result == 1) {
-            return response(['statusText' => 'ok', 'message' => "مظلب حذف شد"], 200);
+            return response(['statusText' => 'ok', 'message' => "مطلب حذف شد"], 200);
         } else {
-            return response(['statusText' => 'fail', 'message' => "مظلب حذف نشد"], 200);
+            return response(['statusText' => 'fail', 'message' => "مطلب حذف نشد"], 200);
+        }
+    }
+    public function post(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = MPost::where('post_id', '=', $content->post_id)->get();
+        if ($result->count()  == 1) {
+            $result[0]->postFullData();
+            return response(['statusText' => 'ok', 'data' => $result[0]], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "خطا در بازیابی اطلاعات"], 200);
+        }
+    }
+    public function lastPosts(Request $request)
+    {
+        $result = MPost::latest()->take(3)->get();
+        if ($result->count()  > 0) {
+            for ($i = 0; $i < $result->count(); $i++) {
+                $result[$i]->postFullData();
+            }
+            return response(['statusText' => 'ok', 'list' => $result], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "خطا در بازیابی اطلاعات"], 200);
         }
     }
     public function changePostStatus(Request $request)

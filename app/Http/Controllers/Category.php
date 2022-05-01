@@ -13,6 +13,9 @@ class Category extends Controller
         $list = [];
         $indexs = [];
         for ($i = 0; $i < count($all); $i++) {
+            $all[$i]['image'] =  $all[$i]->categoryImage();
+        }
+        for ($i = 0; $i < count($all); $i++) {
             $boolean = true;
             foreach ($indexs as $value) {
                 if ($all[$i]->category_id == $value) {
