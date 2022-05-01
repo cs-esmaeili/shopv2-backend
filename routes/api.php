@@ -145,6 +145,7 @@ Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {
     Route::post('/categoryProducts', [Product::class, 'categoryProducts'])->name('categoryProducts');
     Route::post('/post', [Post::class, 'post'])->name('post');
     Route::post('/lastPosts', [Post::class, 'lastPosts'])->name('lastPosts');
+    Route::post('/posts', [Post::class, 'posts'])->name('posts');
 
     Route::middleware([CheckToken::class])->group(function () {
         Route::post('/addAddress', [Person::class, 'addAddress'])->name('addAddress');

@@ -67,7 +67,19 @@ class Post extends Controller
     }
     public function lastPosts(Request $request)
     {
-        $result = MPost::latest()->take(3)->get();
+        $result = MPost::where('status', '=', 1)->latest()->take(3)->get();
+        if ($result->count()  > 0) {
+            for ($i = 0; $i < $result->count(); $i++) {
+                $result[$i]->postFullData();
+            }
+            return response(['statusText' => 'ok', 'list' => $result], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "خطا در بازیابی اطلاعات"], 200);
+        }
+    }
+    public function posts(Request $request)
+    {
+        $result = MPost::where('status', '=', 1)->get();
         if ($result->count()  > 0) {
             for ($i = 0; $i < $result->count(); $i++) {
                 $result[$i]->postFullData();
