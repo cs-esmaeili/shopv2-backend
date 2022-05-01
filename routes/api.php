@@ -142,6 +142,7 @@ Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {
     Route::post('/register', [Authentication::class, 'register'])->name('register');
     Route::post('/productData', [Product::class, 'productData'])->name('productData');
     Route::post('/categoryListPyramid', [Category::class, 'categoryListPyramid'])->name('categoryListPyramid');
+    Route::post('/categoryProducts', [Product::class, 'categoryProducts'])->name('categoryProducts');
 
     Route::middleware([CheckToken::class])->group(function () {
         Route::post('/addAddress', [Person::class, 'addAddress'])->name('addAddress');

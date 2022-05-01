@@ -159,4 +159,17 @@ class Product extends Controller
             return response(['statusText' => 'fail', 'message' =>  'تعداد کالا تغییر پیدا نکرد'], 201);
         }
     }
+    public function categoryProducts(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = ModelsProduct::where('category_id', '=', $content->category_id)->get();
+        foreach ($result as $product) {
+            $product->productFullData();
+        }
+        if ($result) {
+            return response(['statusText' => 'ok', 'list' => $result], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "خطای در بازیابی اطلاعات رخ داد دوباره سعی کنید"], 201);
+        }
+    }
 }
