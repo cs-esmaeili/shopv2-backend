@@ -172,4 +172,17 @@ class Product extends Controller
             return response(['statusText' => 'fail', 'message' => "خطای در بازیابی اطلاعات رخ داد دوباره سعی کنید"], 201);
         }
     }
+    public function search(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = ModelsProduct::where('name', 'LIKE', "%$content->name%")->get();
+        foreach ($result as $product) {
+            $product->productFullData();
+        }
+        if ($result) {
+            return response(['statusText' => 'ok', 'list' => $result], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "خطای در بازیابی اطلاعات رخ داد دوباره سعی کنید"], 201);
+        }
+    }
 }
