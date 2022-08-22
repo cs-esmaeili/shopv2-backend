@@ -64,7 +64,6 @@ class Category extends Controller
         $content =  json_decode($request->getContent());
         $result = ModelsCategory::create([
             'name' => $content->name,
-            'type' => $content->type,
             'file_id' => $content->file_id,
             'parent_id' => $content->parent_id,
         ]);

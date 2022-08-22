@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\classes\FM;
 use App\Http\classes\G;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Product extends Model
 {

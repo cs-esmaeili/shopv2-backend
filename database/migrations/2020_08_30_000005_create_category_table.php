@@ -17,7 +17,6 @@ class CreateCategoryTable extends Migration
             $table->id('category_id');
             $table->timestamps();
             $table->string('name', 255);
-            $table->string('type', 255);
             $table->foreignId('file_id');
             $table->foreign('file_id')->references('file_id')->on('file');
             $table->integer('parent_id')->nullable(0);

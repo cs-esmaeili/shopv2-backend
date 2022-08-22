@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 
 class FM
 {
-    private const FILE_MANAGER_BASE_PUBLIC_Directory = 'E:/dev/web/shopv2-backend/public/files';
-    private const FILE_MANAGER_BASE_PRIVATE_Directory = 'E:/dev/web/shopv2-backend/files';
+    private const FILE_MANAGER_BASE_PUBLIC_Directory = 'F:/dev/shopv2-backend/public/files';
+    private const FILE_MANAGER_BASE_PRIVATE_Directory = 'F:/dev/shopv2-backend/files';
     private const APP_URL = 'http://localhost/shop/';
     private const PUBLIC_FOLDER_NAME = 'public';
 
