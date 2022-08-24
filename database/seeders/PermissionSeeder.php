@@ -47,5 +47,8 @@ class PermissionSeeder extends Seeder
         Permission::create([
             'name' => 'dashboard_page',
         ]);
+        Permission::create([
+            'name' => 'factors_page',
+        ]);
     }
 }

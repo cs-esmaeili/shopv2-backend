@@ -132,6 +132,9 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/createProduct', [Product::class, 'createProduct'])->name('createProduct');
         Route::post('/productList', [Product::class, 'productList'])->name('productList');
         Route::post('/deleteProduct', [Product::class, 'deleteProduct'])->name('deleteProduct');
+
+        Route::post('/factorsList', [Person::class, 'factorsList'])->name('factorsList');
+        Route::post('/changeFactorStatus', [Person::class, 'changeFactorStatus'])->name('changeFactorStatus');
     });
 });
 Route::prefix('user')->middleware([CheckHeaders::class])->group(function () {

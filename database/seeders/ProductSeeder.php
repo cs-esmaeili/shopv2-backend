@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        for ($c = 0; $c < 5; $c++) {
+        for ($c = 0; $c < 30; $c++) {
             $locationTarget = FM::location('/' . $c . '/', 'public');
             $result = FM::createFolder($locationTarget);
 
@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
             File::create([
                 'orginal_name' =>  $randomFirst,
                 'new_name' => $newNameFirst,
-                'hash'=> null,
+                'hash' => null,
                 'location' => ($locationTarget),
                 'person_id' => 1,
                 'type' => "public"
@@ -46,13 +46,13 @@ class ProductSeeder extends Seeder
             File::create([
                 'orginal_name' =>  $randomSecond,
                 'new_name' => $newNameSecond,
-                'hash'=> null,
+                'hash' => null,
                 'location' => ($locationTarget),
                 'person_id' => 1,
                 'type' => "public"
             ]);
             Product::create([
-                'category_id' => 1,
+                'category_id' => rand(1, 5),
                 'name' => 'product ' . $c,
                 'price' => rand(10000, 50000),
                 'sale_price' => rand(50000, 100000),

@@ -8,6 +8,7 @@ use App\Http\classes\View;
 use App\Models\Key_Value;
 use App\Models\Post;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class IndexPage extends Controller
 {
@@ -67,6 +68,7 @@ class IndexPage extends Controller
         $data = [
             'slider' => $silder, 'latestPosts' => $lastPosts, 'products3x' => [$product1, $product2, $product3], 'special' => $product4, 'moreSeal' => $product5
         ];
+        Log::info($product4);
         return response(['statusText' => 'ok', 'data' => $data], 200);
     }
 }

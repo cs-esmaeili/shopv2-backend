@@ -325,6 +325,7 @@ class Person extends Controller
         foreach ($result as $item1) {
             $temp = $item1->factorProducts;
             foreach ($temp as $item2) {
+                $item2['time'] = $item1->created_at;
                 $item2->product->productFullData();
             }
         }
@@ -333,5 +334,28 @@ class Person extends Controller
         } else {
             return response(['statusText' => 'fail',  'message' => "خطا در بازیابی اطلاعات"], 200);
         }
+    }
+    public function factorsList(Request $request)
+    {
+        $factors = Factor::all();
+        foreach ($factors as $factor) {
+            $factor->person->informations();
+            $factor->address;
+            $factor->factorProducts;
+            foreach ($factor['factorProducts'] as $product) {
+                $product->product->productFullData();
+            }
+        }
+        if ($factors) {
+            return response(['statusText' => 'ok', 'list' => $factors], 200);
+        } else {
+            return response(['statusText' => 'fail',  'message' => "خطا در بازیابی اطلاعات"], 200);
+        }
+    }
+    public function changeFactorStatus(Request $request)
+    {
+        $content = json_decode($request->getContent());
+        $result = Factor::where('factor_id' , '=' , $content->factor_id)->update(['status' => $content->status]);
+        return response(['statusText' => 'ok', "message" => 'وضعیت فاکتور تغییر کرد'], 200);
     }
 }

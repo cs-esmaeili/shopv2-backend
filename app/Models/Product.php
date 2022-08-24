@@ -41,9 +41,9 @@ class Product extends Model
         $temp = FM::folderFilesLinks($location);
         $images = [];
         foreach ($temp as  $image) {
-            if (str_contains($image['name'], 'p')) {
+            // if (str_contains($image['name'], 'p')) {
                 $images[] = $image['link'];
-            }
+            // }
         }
         $temp1 = $this->category;
         $temp2 = $this->items;
